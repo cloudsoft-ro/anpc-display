@@ -125,7 +125,7 @@ class ANPC_Elementor_Widget extends \Elementor\Widget_Base
 		// Use the existing logic from the main plugin class
 		global $anpc_display;
 		if (isset($anpc_display) && method_exists($anpc_display, 'get_anpc_content')) {
-			echo $anpc_display->get_anpc_content();
+			echo wp_kses_post($anpc_display->get_anpc_content());
 		}
 	}
 }
