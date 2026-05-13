@@ -5,7 +5,7 @@ Tags: anpc, sal, sol, romania, ecommerce
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 Automatically displays the mandatory SAL and optionally the SOL links and icons for online stores in Romania.
@@ -45,6 +45,10 @@ Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întrerupt
 1. Exemplu de afișare în footer / Footer display example.
 
 == Changelog ==
+
+= 1.2.0 =
+* Nou: Adăugat bloc Gutenberg nativ pentru inserarea ușoară a pictogramelor SAL/SOL în pagini și postări / Added native Gutenberg block for easy SAL/SOL icons insertion in pages and posts.
+* Optimizare: Îmbunătățiri de performanță și suport pentru noul editor WordPress / Performance improvements and support for the new WordPress editor.
 
 = 1.1.2 =
 * CI/CD: Testarea fluxului automat de publicare pe GitHub și WordPress.org / Testing the automated deployment workflow for GitHub and WordPress.org.
