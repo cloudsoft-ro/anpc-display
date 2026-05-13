@@ -1,0 +1,107 @@
+# Copyright (C) 2026 Constantin Onu
+# This file is distributed under the same license as the ANPC Display plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: ANPC Display 1.0.9\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/anpc-display\n"
+"Last-Translator: Constantin Onu <constantin@onu.ro>\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: anpc-display\n"
+
+#: anpc-display.php:5
+msgid "Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România)."
+msgstr "Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România."
+
+#: anpc-display.php:92 anpc-display.php:131
+msgid "Setări ANPC Display"
+msgstr "Setări ANPC Display"
+
+#: anpc-display.php:93
+msgid "ANPC Display"
+msgstr "ANPC Display"
+
+#: anpc-display.php:109
+msgid "Setări"
+msgstr "Setări"
+
+#: anpc-display.php:134
+msgid "Acest plugin afișează pictogramele SAL și SOL în subsolul site-ului, conform legislației ANPC."
+msgstr "Acest plugin afișează pictogramele SAL și SOL în subsolul site-ului, conform legislației ANPC."
+
+#: anpc-display.php:174
+msgid "Configurare Generală"
+msgstr "Configurare Generală"
+
+
+#: anpc-display.php:190
+msgid "Setări SAL (Alternative Dispute Resolution)"
+msgstr "Setări SAL (Soluționarea Alternativă a Litigiilor)"
+
+#: anpc-display.php:197
+msgid "Imagine SAL URL"
+msgstr "Imagine SAL URL"
+
+#: anpc-display.php:205
+msgid "Link SAL URL"
+msgstr "Link SAL URL"
+
+#: anpc-display.php:214
+msgid "Setări SOL (Online Dispute Resolution)"
+msgstr "Setări SOL (Soluționarea Online a Litigiilor)"
+
+#: anpc-display.php:221
+msgid "Afișează SOL"
+msgstr "Afișează SOL"
+
+#: anpc-display.php:229
+msgid "Imagine SOL URL"
+msgstr "Imagine SOL URL"
+
+#: anpc-display.php:237
+msgid "Link SOL URL"
+msgstr "Link SOL URL"
+
+#: anpc-display.php:291
+msgid "Configurați URL-urile pentru imaginile și link-urile SAL/SOL. Lăsați câmpurile goale pentru a folosi valorile implicite."
+msgstr "Configurați URL-urile pentru imaginile și link-urile SAL/SOL. Lăsați câmpurile goale pentru a folosi valorile implicite."
+
+#: anpc-display.php:303
+msgid "Notă: Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întreruptă din 20 iulie 2025. Afișarea acestui link este acum opțională."
+msgstr "Notă: Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întreruptă din 20 iulie 2025. Afișarea acestui link este acum opțională."
+
+#: anpc-display.php:306
+msgid "Mai multe informații despre încetarea platformei SOL și noile reglementări pot fi găsite aici: %s"
+msgstr "Mai multe informații despre încetarea platformei SOL și noile reglementări pot fi găsite aici: %s"
+
+#: anpc-display.php:186
+msgid "Aliniere"
+msgstr "Aliniere"
+
+#: anpc-display.php:252
+msgid "Stânga"
+msgstr "Stânga"
+
+#: anpc-display.php:253
+msgid "Centru"
+msgstr "Centru"
+
+#: anpc-display.php:254
+msgid "Dreapta"
+msgstr "Dreapta"
+
+#: anpc-display.php:191
+msgid "Mărime Pictograme Mobil (px)"
+msgstr "Mărime Pictograme Mobil (px)"
+
+#: anpc-display.php:267
+msgid "Lățimea pictogramelor pe ecrane mai mici de 600px."
+msgstr "Lățimea pictogramelor pe ecrane mai mici de 600px."
+
+#: anpc-display.php:196
+msgid "CSS Personalizat"
+msgstr "CSS Personalizat"

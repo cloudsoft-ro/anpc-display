@@ -1,0 +1,32 @@
+.anpc-display-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
+  background-color: transparent;
+  margin-top: 20px;
+}
+.anpc-item {
+  display: block;
+  transition: transform 0.2s ease;
+}
+.anpc-item:hover {
+  transform: scale(1.05);
+}
+.anpc-item img {
+  max-width: 250px;
+  height: auto;
+  max-height: 50px;
+  display: block;
+  border: none;
+  box-shadow: none;
+}
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .anpc-display-container {
+    flex-direction: column;
+  }
+}
