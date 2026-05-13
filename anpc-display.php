@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.2.0
+ * Version:     1.2.1
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -524,7 +524,7 @@ class ANPC_Display
 	{
 		$options = get_option('anpc_display_option_name');
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.2.0');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.2.1');
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
@@ -569,7 +569,7 @@ class ANPC_Display
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
 			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.2.0'
+			'1.2.1'
 		);
 
 		register_block_type('anpc-display/badges', array(
@@ -611,11 +611,25 @@ class ANPC_Display
 		$isSolEnabled = isset($options['enable_sol']) ? $options['enable_sol'] : 0;
 		$alignment = isset($options['alignment']) ? $options['alignment'] : 'center';
 
+		// Multi-language support (WPML, Polylang or native locale)
+		$locale = determine_locale();
+		$lang = substr($locale, 0, 2);
+
 		$default_sal_url = 'https://anpc.ro/ce-este-sal/';
 		$default_sol_url = 'https://ec.europa.eu/consumers/odr';
 
+		// Adjust default URLs based on language if no custom URL is provided
+		if ($lang !== 'ro') {
+			// There isn't a direct EN page for ANPC SAL, but the EU SOL platform is multilingual.
+			$default_sol_url = 'https://ec.europa.eu/consumers/odr/main/?event=main.home2.show';
+		}
+
 		$sal_url = isset($options['sal_link_url']) && !empty($options['sal_link_url']) ? $options['sal_link_url'] : $default_sal_url;
 		$sol_url = isset($options['sol_link_url']) && !empty($options['sol_link_url']) ? $options['sol_link_url'] : $default_sol_url;
+
+		// Allow translation plugins to filter URLs
+		$sal_url = apply_filters('anpc_display_sal_url', $sal_url, $lang);
+		$sol_url = apply_filters('anpc_display_sol_url', $sol_url, $lang);
 
 		$default_sal_img = plugin_dir_url(__FILE__) . 'assets/sal.png';
 		$default_sol_img = plugin_dir_url(__FILE__) . 'assets/sol.png';

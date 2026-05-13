@@ -2,7 +2,7 @@
 
 Acest plugin afișează automat link-urile și pictogramele SAL (Soluționarea Alternativă a Litigiilor) și SOL (Soluționarea Online a Litigiilor), obligatorii pentru magazinele online din România conform Ordinului ANPC nr. 449/2022.
 
-## Caracteristici (v1.2.0)
+## Caracteristici (v1.2.1)
 
 - **Respectă legislația**: Afișează pictogramele oficiale conform specificațiilor ANPC.
 - **Conform GDPR**: Imaginile sunt stocate local în plugin, eliminând riscul de tracking prin hotlinking extern.
@@ -41,7 +41,7 @@ GPLv2 or later.
 
 This plugin automatically displays the SAL (Alternative Dispute Resolution) and SOL (Online Dispute Resolution) links and icons, which are mandatory for online stores in Romania according to ANPC Order no. 449/2022.
 
-## Features (v1.2.0)
+## Features (v1.2.1)
 
 - **Legal Compliance**: Displays official icons according to ANPC specifications.
 - **GDPR Compliant**: Images are stored locally, eliminating tracking risks from external hotlinking.
