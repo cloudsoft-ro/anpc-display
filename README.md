@@ -2,12 +2,12 @@
 
 Acest plugin afișează automat link-urile și pictogramele SAL (Soluționarea Alternativă a Litigiilor) și SOL (Soluționarea Online a Litigiilor), obligatorii pentru magazinele online din România conform Ordinului ANPC nr. 449/2022.
 
-## Caracteristici (v1.2.1)
+## Caracteristici (v1.3.0)
 
 - **Respectă legislația**: Afișează pictogramele oficiale conform specificațiilor ANPC.
 - **Conform GDPR**: Imaginile sunt stocate local în plugin, eliminând riscul de tracking prin hotlinking extern.
 - **Previzualizare Admin**: Vezi pictogramele direct în pagina de setări pentru feedback instant.
-- **Control Poziționare**: Opțiuni de aliniere (Stânga/Centru/Dreapta) și Shortcode `[anpc_display]` inclus.
+- **Control Poziționare**: Opțiuni de aliniere, Shortcode `[anpc_display]`, bloc Gutenberg și widget Elementor incluse.
 - **Optimizare Mobil**: Setări dedicate pentru mărimea pictogramelor pe ecrane mici și câmp CSS Personalizat.
 - **Curățenie la Dezinstalare**: Șterge automat toate setările din baza de date la dezinstalarea plugin-ului.
 - **Bilingv Out-of-the-Box**: Suport complet pentru Română și Engleză.
@@ -41,12 +41,12 @@ GPLv2 or later.
 
 This plugin automatically displays the SAL (Alternative Dispute Resolution) and SOL (Online Dispute Resolution) links and icons, which are mandatory for online stores in Romania according to ANPC Order no. 449/2022.
 
-## Features (v1.2.1)
+## Features (v1.3.0)
 
 - **Legal Compliance**: Displays official icons according to ANPC specifications.
 - **GDPR Compliant**: Images are stored locally, eliminating tracking risks from external hotlinking.
 - **Admin Previews**: See icons directly in the settings page for instant feedback.
-- **Positioning Control**: Alignment options (Left/Center/Right) and `[anpc_display]` shortcode included.
+- **Positioning Control**: Alignment options, `[anpc_display]` shortcode, Gutenberg block, and Elementor widget included.
 - **Mobile Optimized**: Settings for icon size on small screens and a Custom CSS field.
 - **Clean Uninstall**: Automatically removes all settings from the database upon uninstallation.
 - **Bilingual Out-of-the-Box**: Full support for Romanian and English.

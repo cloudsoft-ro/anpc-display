@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.2.1
+ * Version:     1.3.0
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -76,6 +76,7 @@ class ANPC_Display
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
 		add_shortcode('anpc_display', array($this, 'shortcode_callback'));
 		add_action('init', array($this, 'register_gutenberg_block'));
+		add_action('elementor/widgets/register', array($this, 'register_elementor_widgets'));
 	}
 
 
@@ -524,7 +525,7 @@ class ANPC_Display
 	{
 		$options = get_option('anpc_display_option_name');
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.2.1');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.3.0');
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
@@ -569,13 +570,26 @@ class ANPC_Display
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
 			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.2.1'
+			'1.3.0'
 		);
 
 		register_block_type('anpc-display/badges', array(
 			'editor_script' => 'anpc-display-block-js',
 			'render_callback' => array($this, 'shortcode_callback'),
 		));
+	}
+
+	/**
+	 * Register the Elementor widget.
+	 *
+	 * @since 1.3.0
+	 * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgets manager.
+	 * @return void
+	 */
+	public function register_elementor_widgets($widgets_manager)
+	{
+		require_once plugin_dir_path(__FILE__) . 'elementor-widget.php';
+		$widgets_manager->register(new \ANPC_Elementor_Widget());
 	}
 
 	/**
