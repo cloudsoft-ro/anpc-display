@@ -1,0 +1,45 @@
+name: Deploy & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Plugin Zip
+        run: |
+          # Create a temporary directory for the zip structure
+          mkdir -p dist/anpc-display
+          
+          # Copy only necessary files
+          cp -r assets dist/anpc-display/
+          cp -r languages dist/anpc-display/
+          cp anpc-display.php dist/anpc-display/
+          cp readme.txt dist/anpc-display/
+          cp README.md dist/anpc-display/
+          cp uninstall.php dist/anpc-display/
+          
+          # Create the zip file
+          cd dist && zip -r ../anpc-display.zip anpc-display
+          cd ..
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: anpc-display.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: WordPress.org Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: anpc-display
