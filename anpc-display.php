@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.3.5
+ * Version:     1.3.6
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -597,7 +597,7 @@ class ANPC_Display
 	{
 		$options = get_option('anpc_display_option_name');
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.3.5');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.3.6');
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
@@ -649,7 +649,7 @@ class ANPC_Display
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
 			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.3.5',
+			'1.3.6',
 			true
 		);
 
