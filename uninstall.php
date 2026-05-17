@@ -10,9 +10,7 @@
  */
 
 // If uninstall not called from WordPress, exit.
-if (!defined('WP_UNINSTALL_PLUGIN') || !defined('ABSPATH')) {
-    exit;
-}
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
 // Delete plugin options from the wp_options table.
 delete_option('anpc_display_option_name');

@@ -7,9 +7,7 @@
  * @since 1.3.0
  */
 
-if (!defined('ABSPATH')) {
-	exit; // Exit if accessed directly.
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 class ANPC_Elementor_Widget extends \Elementor\Widget_Base
 {
