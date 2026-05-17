@@ -21,6 +21,7 @@ jobs:
           cp -r assets dist/anpc-display/
           cp -r languages dist/anpc-display/
           cp anpc-display.php dist/anpc-display/
+          cp elementor-widget.php dist/anpc-display/
           cp readme.txt dist/anpc-display/
           cp README.md dist/anpc-display/
           cp uninstall.php dist/anpc-display/

@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.3.1
+ * Version:     1.3.2
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -137,6 +137,13 @@ class ANPC_Display
 	<p>
 		<?php esc_html_e('Acest plugin afișează pictogramele SAL și SOL în subsolul site-ului, conform legislației ANPC.', 'anpc-display'); ?>
 	</p>
+	<div class="notice notice-info" style="margin-top: 15px; padding: 10px;">
+		<p>
+			<strong><?php esc_html_e('Sfat:', 'anpc-display'); ?></strong>
+			<?php esc_html_e('Dacă dorești să plasezi pictogramele manual (într-un widget personalizat, o pagină specifică sau via Elementor/Gutenberg), poți folosi shortcode-ul:', 'anpc-display'); ?>
+			<code>[anpc_display]</code>
+		</p>
+	</div>
 	<form method="post" action="options.php">
 		<?php
 		settings_fields('anpc_display_option_group');
@@ -181,9 +188,25 @@ class ANPC_Display
 		);
 
 		add_settings_field(
+			'disable_footer',
+			esc_html__('Afișare Automată', 'anpc-display'),
+			array($this, 'disable_footer_callback'),
+			'anpc-display-setting-admin',
+			'setting_section_id'
+		);
+
+		add_settings_field(
 			'alignment',
 			esc_html__('Aliniere', 'anpc-display'),
 			array($this, 'alignment_callback'),
+			'anpc-display-setting-admin',
+			'setting_section_id'
+		);
+
+		add_settings_field(
+			'layout',
+			esc_html__('Mod Afișare', 'anpc-display'),
+			array($this, 'layout_callback'),
 			'anpc-display-setting-admin',
 			'setting_section_id'
 		);
@@ -262,6 +285,47 @@ class ANPC_Display
 	}
 
 	/**
+	 * Render the disable footer checkbox field.
+	 *
+	 * @since 1.3.3
+	 * @return void
+	 */
+	public function disable_footer_callback()
+	{
+		$is_disabled = isset($this->options['disable_footer']) ? $this->options['disable_footer'] : 0;
+		printf(
+			'<input type="checkbox" id="disable_footer" name="anpc_display_option_name[disable_footer]" value="1" %s />',
+			$is_disabled ? 'checked' : ''
+		);
+		echo ' <label for="disable_footer">' . esc_html__('Dezactivează afișarea automată în subsolul site-ului (Footer)', 'anpc-display') . '</label>';
+		echo '<p class="description">' . esc_html__('Bifează doar dacă folosești exclusiv shortcode-ul, blocul Gutenberg sau widget-ul Elementor, pentru a evita afișarea de două ori a pictogramelor.', 'anpc-display') . '</p>';
+	}
+
+	/**
+	 * Render the layout select field.
+	 *
+	 * @since 1.3.2
+	 * @return void
+	 */
+	public function layout_callback()
+	{
+		$layout = isset($this->options['layout']) ? $this->options['layout'] : 'auto';
+?>
+<select id="layout" name="anpc_display_option_name[layout]">
+	<option value="auto" <?php selected($layout, 'auto' ); ?>>
+		<?php esc_html_e('Automat (Implicit)', 'anpc-display'); ?>
+	</option>
+	<option value="row" <?php selected($layout, 'row' ); ?>>
+		<?php esc_html_e('Una lângă alta (pe aceeași linie)', 'anpc-display'); ?>
+	</option>
+	<option value="column" <?php selected($layout, 'column' ); ?>>
+		<?php esc_html_e('Una peste alta (pe coloană)', 'anpc-display'); ?>
+	</option>
+</select>
+<?php
+	}
+
+	/**
 	 * Render the alignment select field.
 	 *
 	 * @since 1.0.7
@@ -334,6 +398,11 @@ class ANPC_Display
 	{
 		$new_input = array();
 
+		if (isset($input['disable_footer']))
+			$new_input['disable_footer'] = absint($input['disable_footer']);
+		else
+			$new_input['disable_footer'] = 0;
+
 		if (isset($input['enable_sol']))
 			$new_input['enable_sol'] = absint($input['enable_sol']);
 		else
@@ -341,6 +410,9 @@ class ANPC_Display
 
 		if (isset($input['alignment']))
 			$new_input['alignment'] = sanitize_text_field($input['alignment']);
+
+		if (isset($input['layout']))
+			$new_input['layout'] = sanitize_text_field($input['layout']);
 
 		if (isset($input['mobile_icon_size']))
 			$new_input['mobile_icon_size'] = absint($input['mobile_icon_size']);
@@ -525,12 +597,19 @@ class ANPC_Display
 	{
 		$options = get_option('anpc_display_option_name');
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.3.1');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.3.2');
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
+		$layout = isset($options['layout']) ? $options['layout'] : 'auto';
 
 		$dynamic_css = '';
+		if ($layout === 'column') {
+			$dynamic_css .= ".anpc-display-container { flex-direction: column !important; }";
+		} elseif ($layout === 'row') {
+			$dynamic_css .= ".anpc-display-container { flex-direction: row !important; }";
+		}
+
 		if ($mobile_size !== 150) {
 			$dynamic_css .= "@media (max-width: 600px) { .anpc-display-container .anpc-item img { width: {$mobile_size}px !important; height: auto !important; } }";
 		}
@@ -570,7 +649,7 @@ class ANPC_Display
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
 			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.3.1',
+			'1.3.2',
 			true
 		);
 
@@ -601,6 +680,13 @@ class ANPC_Display
 	 */
 	public function display_footer_content()
 	{
+		$options = get_option('anpc_display_option_name');
+		$is_disabled = isset($options['disable_footer']) ? $options['disable_footer'] : 0;
+
+		if ($is_disabled) {
+			return; // The user chose to hide it from the footer automatically.
+		}
+
 		echo wp_kses_post($this->get_anpc_content());
 	}
 
@@ -652,9 +738,26 @@ class ANPC_Display
 		$sal_img = isset($options['sal_image_url']) && !empty($options['sal_image_url']) ? $options['sal_image_url'] : $default_sal_img;
 		$sol_img = isset($options['sol_image_url']) && !empty($options['sol_image_url']) ? $options['sol_image_url'] : $default_sol_img;
 
+		$layout = isset($options['layout']) ? $options['layout'] : 'auto';
+		$layout_style = '';
+		if ($layout === 'column') {
+			$layout_style = 'flex-direction: column !important; ';
+		} elseif ($layout === 'row') {
+			$layout_style = 'flex-direction: row !important; ';
+		}
+
+		$flex_align = 'center';
+		if ($alignment === 'left') {
+			$flex_align = 'flex-start';
+		} elseif ($alignment === 'right') {
+			$flex_align = 'flex-end';
+		}
+		
+		$layout_style .= 'justify-content: ' . $flex_align . '; align-items: ' . $flex_align . ';';
+
 		ob_start();
 ?>
-<div class="anpc-display-container" style="text-align: <?php echo esc_attr($alignment); ?>;">
+<div class="anpc-display-container" style="text-align: <?php echo esc_attr($alignment); ?>; <?php echo esc_attr($layout_style); ?>">
 	<a href="<?php echo esc_url($sal_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="ANPC - Soluționarea Alternativă a Litigiilor">
 		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL">

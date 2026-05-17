@@ -5,7 +5,7 @@ Tags: anpc, sal, sol, romania, ecommerce
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 
 Automatically displays the mandatory SAL and optionally the SOL links and icons for online stores in Romania.
@@ -42,9 +42,16 @@ Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întrerupt
 
 == Screenshots ==
 
-1. Exemplu de afișare în footer / Footer display example.
+1. Exemplu de afișare "Una lângă alta" (pe aceeași linie) / "Side by side" layout example.
+2. Interfața de administrare (Setări) cu opțiunile de afișare / Admin settings interface with layout options.
+3. Exemplu de afișare "Una peste alta" (pe coloană) / "Stacked" column layout example.
 
 == Changelog ==
+
+= 1.3.2 =
+* Nou: Opțiune nouă "Mod Afișare" pentru a forța afișarea pictogramelor una lângă alta sau una peste alta / New: "Layout" option added to force side-by-side or stacked display of icons.
+* Nou: Opțiune "Afișare Automată" care permite dezactivarea afișării implicite din footer, utilă când dorești să folosești exclusiv shortcode-ul sau widget-ul Elementor / Added option to disable default footer display, useful when exclusively using the shortcode or Elementor widget.
+* UX: Adăugat o notificare în pagina de setări cu informații despre utilizarea shortcode-ului / Added a notice in the settings page with info on how to use the shortcode.
 
 = 1.3.1 =
 * Fix: Corectarea unor probleme de securitate și linting (escaping și protecție acces fișiere) / Fixed security and linting issues (escaping and file access protection).
