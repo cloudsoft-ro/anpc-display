@@ -5,7 +5,7 @@ Tags: anpc, sal, sol, romania, ecommerce
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.4.9
+Stable tag: 1.5.0
 License: GPLv2 or later
 
 Automatically displays the mandatory SAL and optionally the SOL links and icons for online stores in Romania.
@@ -47,6 +47,9 @@ Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întrerupt
 3. Interfața de administrare (Setări) cu opțiunile de afișare / Admin settings interface with layout options.
 
 == Changelog ==
+
+= 1.5.0 =
+* Design: Actualizat bannerul oficial de pe WordPress.org prin integrarea celor două imagini de banner reale (SAL și SOL) la subsol, aliniate excelent, asigurând o coerență vizuală premium deplină cu pachetul de marketplace Codester / Design: Updated the official WordPress.org banner by integrating the two real website banners (SAL and SOL) at the footer, perfectly aligned, ensuring full visual consistency with the Codester marketplace package.
 
 = 1.4.9 =
 * Design: Actualizat pictograma oficială a plugin-ului cu cercul SAL decupat cu fundal transparent din imaginea Codester Preview, fiind optimizat excelent atât pentru light mode, cât și pentru dark mode / Design: Updated the official plugin icon with the circular SAL badge cropped with a transparent background from the Codester Preview image, beautifully optimized for both light and dark modes.
