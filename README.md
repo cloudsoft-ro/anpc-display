@@ -2,15 +2,17 @@
 
 Acest plugin afișează automat link-urile și pictogramele SAL (Soluționarea Alternativă a Litigiilor) și SOL (Soluționarea Online a Litigiilor), obligatorii pentru magazinele online din România conform Ordinului ANPC nr. 449/2022.
 
-## Caracteristici (v1.3.1)
+## Caracteristici (v1.4.3)
 
 - **Respectă legislația**: Afișează pictogramele oficiale conform specificațiilor ANPC.
+- **Claritate Perfectă (Nou)**: Folosește formatul vectorial (.svg) pentru imaginile SAL și SOL, asigurând o afișare perfectă pe orice ecran (Retina, 4K). Include un mecanism de *fallback* la .png pentru compatibilitate maximă.
+- **Opțional pentru SOL**: Link-ul SOL poate fi ascuns, conform opririi platformei europene din iulie 2025.
 - **Conform GDPR**: Imaginile sunt stocate local în plugin, eliminând riscul de tracking prin hotlinking extern.
 - **Previzualizare Admin**: Vezi pictogramele direct în pagina de setări pentru feedback instant.
-- **Control Poziționare**: Opțiuni de aliniere, Shortcode `[anpc_display]`, bloc Gutenberg și widget Elementor incluse.
+- **Control Poziționare**: Opțiuni de layout (una lângă alta / una sub alta), Shortcode `[anpc_display]`, bloc Gutenberg și widget Elementor incluse.
 - **Optimizare Mobil**: Setări dedicate pentru mărimea pictogramelor pe ecrane mici și câmp CSS Personalizat.
 - **Curățenie la Dezinstalare**: Șterge automat toate setările din baza de date la dezinstalarea plugin-ului.
-- **Bilingv Out-of-the-Box**: Suport complet pentru Română și Engleză.
+- **Bilingv Out-of-the-Box**: Suport complet pentru Română și Engleză (link-urile se ajustează automat).
 - **Securitate Sporită**: Output escapat corespunzător conform standardelor de revizuire WordPress.org.
 
 ## Instalare
@@ -41,15 +43,17 @@ GPLv2 or later.
 
 This plugin automatically displays the SAL (Alternative Dispute Resolution) and SOL (Online Dispute Resolution) links and icons, which are mandatory for online stores in Romania according to ANPC Order no. 449/2022.
 
-## Features (v1.3.1)
+## Features (v1.4.3)
 
 - **Legal Compliance**: Displays official icons according to ANPC specifications.
+- **Perfect Clarity (New)**: Uses vector format (.svg) for SAL and SOL images, ensuring perfect display on any screen (Retina, 4K), with an automatic .png fallback for maximum compatibility.
+- **SOL Optional**: The SOL link can be hidden due to the discontinuation of the EU platform in July 2025.
 - **GDPR Compliant**: Images are stored locally, eliminating tracking risks from external hotlinking.
 - **Admin Previews**: See icons directly in the settings page for instant feedback.
-- **Positioning Control**: Alignment options, `[anpc_display]` shortcode, Gutenberg block, and Elementor widget included.
+- **Positioning Control**: Layout options (stacked or side-by-side), `[anpc_display]` shortcode, Gutenberg block, and Elementor widget included.
 - **Mobile Optimized**: Settings for icon size on small screens and a Custom CSS field.
 - **Clean Uninstall**: Automatically removes all settings from the database upon uninstallation.
-- **Bilingual Out-of-the-Box**: Full support for Romanian and English.
+- **Bilingual Out-of-the-Box**: Full support for Romanian and English (URLs adjust automatically).
 - **Enhanced Security**: Properly escaped output compliant with WordPress.org review standards.
 
 ## Installation
