@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.4.5
+ * Version:     1.4.6
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -149,6 +149,27 @@ class ANPC_Display
 		submit_button();
 ?>
 	</form>
+
+	<hr style="margin-top: 30px;" />
+	<div style="margin-top: 20px; padding: 16px 20px; background: #fff; border: 1px solid #e0e0e0; border-left: 4px solid #FFDD00; border-radius: 4px; max-width: 600px; display: flex; align-items: center; gap: 16px;">
+		<span style="font-size: 28px;" role="img" aria-label="coffee">☕</span>
+		<div>
+			<strong style="font-size: 14px; display: block; margin-bottom: 4px;">
+				<?php esc_html_e('Îți place acest plugin? Oferă-mi o cafea!', 'anpc-display'); ?>
+			</strong>
+			<span style="font-size: 13px; color: #555;">
+				<?php esc_html_e('Plugin-ul este gratuit și în continuă dezvoltare. Dacă ți-a fost de folos, poți susține munca mea cu o donație simbolică.', 'anpc-display'); ?>
+			</span>
+			<div style="margin-top: 10px;">
+				<a href="https://www.buymeacoffee.com/constantinonu"
+				   target="_blank"
+				   rel="noopener noreferrer"
+				   style="display: inline-block; background: #FFDD00; color: #000; font-weight: 700; font-size: 13px; padding: 8px 16px; border-radius: 6px; text-decoration: none; border: 1px solid #e5c800;">
+					☕ <?php esc_html_e('Buy me a coffee', 'anpc-display'); ?>
+				</a>
+			</div>
+		</div>
+	</div>
 </div>
 <?php
 	}
@@ -595,7 +616,7 @@ class ANPC_Display
 	{
 		$options = get_option('anpc_display_option_name');
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.4.5');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.4.6');
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
@@ -647,7 +668,7 @@ class ANPC_Display
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
 			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.4.5',
+			'1.4.6',
 			true
 		);
 
