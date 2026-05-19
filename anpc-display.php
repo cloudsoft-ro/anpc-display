@@ -499,7 +499,7 @@ class ANPC_Display
 	/**
 	 * Render the SAL image URL text input field.
 	 *
-	 * Defaults to the bundled `assets/sal.png` when value is empty.
+	 * Defaults to the bundled `assets/anpc-sal.svg` when value is empty.
 	 *
 	 * @since 1.0.0
 	 *
@@ -507,22 +507,24 @@ class ANPC_Display
 	 */
 	public function sal_image_callback()
 	{
-		$default_sal = plugin_dir_url(__FILE__) . 'assets/sal.png';
+		$default_sal = plugin_dir_url(__FILE__) . 'assets/anpc-sal.svg';
+		$fallback_sal = plugin_dir_url(__FILE__) . 'assets/sal.png';
 		$value = isset($this->options['sal_image_url']) && !empty($this->options['sal_image_url']) ? $this->options['sal_image_url'] : $default_sal;
 		printf(
 			'<input type="text" id="sal_image_url" name="anpc_display_option_name[sal_image_url]" value="%s" style="width: 100%%; max-width: 400px;" />',
 			esc_attr($value)
 		);
 		printf(
-			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SAL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;"></div>',
-			esc_url($value)
+			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SAL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;" onerror="this.onerror=null; this.src=\'%s\';"></div>',
+			esc_url($value),
+			esc_url($fallback_sal)
 		);
 	}
 
 	/**
 	 * Render the SOL image URL text input field.
 	 *
-	 * Defaults to the bundled `assets/sol.png` when value is empty.
+	 * Defaults to the bundled `assets/anpc-sol.svg` when value is empty.
 	 *
 	 * @since 1.0.0
 	 *
@@ -530,15 +532,17 @@ class ANPC_Display
 	 */
 	public function sol_image_callback()
 	{
-		$default_sol = plugin_dir_url(__FILE__) . 'assets/sol.png';
+		$default_sol = plugin_dir_url(__FILE__) . 'assets/anpc-sol.svg';
+		$fallback_sol = plugin_dir_url(__FILE__) . 'assets/sol.png';
 		$value = isset($this->options['sol_image_url']) && !empty($this->options['sol_image_url']) ? $this->options['sol_image_url'] : $default_sol;
 		printf(
 			'<input type="text" id="sol_image_url" name="anpc_display_option_name[sol_image_url]" value="%s" style="width: 100%%; max-width: 400px;" />',
 			esc_attr($value)
 		);
 		printf(
-			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SOL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;"></div>',
-			esc_url($value)
+			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SOL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;" onerror="this.onerror=null; this.src=\'%s\';"></div>',
+			esc_url($value),
+			esc_url($fallback_sol)
 		);
 	}
 
@@ -730,8 +734,11 @@ class ANPC_Display
 		$sal_url = apply_filters('anpc_display_sal_url', $sal_url, $lang);
 		$sol_url = apply_filters('anpc_display_sol_url', $sol_url, $lang);
 
-		$default_sal_img = plugin_dir_url(__FILE__) . 'assets/sal.png';
-		$default_sol_img = plugin_dir_url(__FILE__) . 'assets/sol.png';
+		$default_sal_img = plugin_dir_url(__FILE__) . 'assets/anpc-sal.svg';
+		$default_sol_img = plugin_dir_url(__FILE__) . 'assets/anpc-sol.svg';
+
+		$fallback_sal_img = plugin_dir_url(__FILE__) . 'assets/sal.png';
+		$fallback_sol_img = plugin_dir_url(__FILE__) . 'assets/sol.png';
 
 		$sal_img = isset($options['sal_image_url']) && !empty($options['sal_image_url']) ? $options['sal_image_url'] : $default_sal_img;
 		$sol_img = isset($options['sol_image_url']) && !empty($options['sol_image_url']) ? $options['sol_image_url'] : $default_sol_img;
@@ -758,12 +765,12 @@ class ANPC_Display
 <div class="anpc-display-container" style="text-align: <?php echo esc_attr($alignment); ?>; <?php echo esc_attr($layout_style); ?>">
 	<a href="<?php echo esc_url($sal_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="ANPC - Soluționarea Alternativă a Litigiilor">
-		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL">
+		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL" onerror="this.onerror=null; this.src='<?php echo esc_url($fallback_sal_img); ?>';">
 	</a>
 	<?php if ($isSolEnabled): ?>
 	<a href="<?php echo esc_url($sol_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="Comisia Europeană - Soluționarea Online a Litigiilor">
-		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL">
+		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL" onerror="this.onerror=null; this.src='<?php echo esc_url($fallback_sol_img); ?>';">
 	</a>
 	<?php
 		endif; ?>
