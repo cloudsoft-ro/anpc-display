@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.4.3
+ * Version:     1.4.4
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -507,17 +507,15 @@ class ANPC_Display
 	 */
 	public function sal_image_callback()
 	{
-		$default_sal = plugin_dir_url(__FILE__) . 'assets/anpc-sal.svg';
-		$fallback_sal = plugin_dir_url(__FILE__) . 'assets/sal.png';
+		$default_sal = plugin_dir_url(__FILE__) . 'assets/sal.png';
 		$value = isset($this->options['sal_image_url']) && !empty($this->options['sal_image_url']) ? $this->options['sal_image_url'] : $default_sal;
 		printf(
 			'<input type="text" id="sal_image_url" name="anpc_display_option_name[sal_image_url]" value="%s" style="width: 100%%; max-width: 400px;" />',
 			esc_attr($value)
 		);
 		printf(
-			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SAL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;" onerror="this.onerror=null; this.src=\'%s\';"></div>',
-			esc_url($value),
-			esc_url($fallback_sal)
+			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SAL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;"></div>',
+			esc_url($value)
 		);
 	}
 
@@ -532,17 +530,15 @@ class ANPC_Display
 	 */
 	public function sol_image_callback()
 	{
-		$default_sol = plugin_dir_url(__FILE__) . 'assets/anpc-sol.svg';
-		$fallback_sol = plugin_dir_url(__FILE__) . 'assets/sol.png';
+		$default_sol = plugin_dir_url(__FILE__) . 'assets/sol.png';
 		$value = isset($this->options['sol_image_url']) && !empty($this->options['sol_image_url']) ? $this->options['sol_image_url'] : $default_sol;
 		printf(
 			'<input type="text" id="sol_image_url" name="anpc_display_option_name[sol_image_url]" value="%s" style="width: 100%%; max-width: 400px;" />',
 			esc_attr($value)
 		);
 		printf(
-			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SOL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;" onerror="this.onerror=null; this.src=\'%s\';"></div>',
-			esc_url($value),
-			esc_url($fallback_sol)
+			'<div style="margin-top: 10px;"><img src="%s" alt="Preview SOL" style="max-height: 50px; border: 1px solid #ccc; padding: 2px;"></div>',
+			esc_url($value)
 		);
 	}
 
@@ -599,7 +595,7 @@ class ANPC_Display
 	{
 		$options = get_option('anpc_display_option_name');
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.4.3');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.4.4');
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
@@ -651,7 +647,7 @@ class ANPC_Display
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
 			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.4.3',
+			'1.4.4',
 			true
 		);
 
@@ -734,11 +730,11 @@ class ANPC_Display
 		$sal_url = apply_filters('anpc_display_sal_url', $sal_url, $lang);
 		$sol_url = apply_filters('anpc_display_sol_url', $sol_url, $lang);
 
-		$default_sal_img = plugin_dir_url(__FILE__) . 'assets/anpc-sal.svg';
-		$default_sol_img = plugin_dir_url(__FILE__) . 'assets/anpc-sol.svg';
+		$default_sal_img = plugin_dir_url(__FILE__) . 'assets/sal.png';
+		$default_sol_img = plugin_dir_url(__FILE__) . 'assets/sol.png';
 
-		$fallback_sal_img = plugin_dir_url(__FILE__) . 'assets/sal.png';
-		$fallback_sol_img = plugin_dir_url(__FILE__) . 'assets/sol.png';
+		$svg_sal_img = plugin_dir_url(__FILE__) . 'assets/anpc-sal.svg';
+		$svg_sol_img = plugin_dir_url(__FILE__) . 'assets/anpc-sol.svg';
 
 		$sal_img = isset($options['sal_image_url']) && !empty($options['sal_image_url']) ? $options['sal_image_url'] : $default_sal_img;
 		$sol_img = isset($options['sol_image_url']) && !empty($options['sol_image_url']) ? $options['sol_image_url'] : $default_sol_img;
@@ -765,12 +761,12 @@ class ANPC_Display
 <div class="anpc-display-container" style="text-align: <?php echo esc_attr($alignment); ?>; <?php echo esc_attr($layout_style); ?>">
 	<a href="<?php echo esc_url($sal_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="ANPC - Soluționarea Alternativă a Litigiilor">
-		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL" onerror="this.onerror=null; this.src='<?php echo esc_url($fallback_sal_img); ?>';">
+		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL" onerror="this.onerror=null; this.src='<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/sal.png'); ?>';">
 	</a>
 	<?php if ($isSolEnabled): ?>
 	<a href="<?php echo esc_url($sol_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="Comisia Europeană - Soluționarea Online a Litigiilor">
-		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL" onerror="this.onerror=null; this.src='<?php echo esc_url($fallback_sol_img); ?>';">
+		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL" onerror="this.onerror=null; this.src='<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/sol.png'); ?>';">
 	</a>
 	<?php
 		endif; ?>
