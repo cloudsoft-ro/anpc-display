@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.4.4
+ * Version:     1.4.5
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -595,7 +595,7 @@ class ANPC_Display
 	{
 		$options = get_option('anpc_display_option_name');
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.4.4');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.4.5');
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
@@ -647,7 +647,7 @@ class ANPC_Display
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
 			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.4.4',
+			'1.4.5',
 			true
 		);
 
@@ -730,11 +730,15 @@ class ANPC_Display
 		$sal_url = apply_filters('anpc_display_sal_url', $sal_url, $lang);
 		$sol_url = apply_filters('anpc_display_sol_url', $sol_url, $lang);
 
-		$default_sal_img = plugin_dir_url(__FILE__) . 'assets/sal.png';
-		$default_sol_img = plugin_dir_url(__FILE__) . 'assets/sol.png';
-
-		$svg_sal_img = plugin_dir_url(__FILE__) . 'assets/anpc-sal.svg';
-		$svg_sol_img = plugin_dir_url(__FILE__) . 'assets/anpc-sol.svg';
+		// Determine default image: prefer SVG if the file exists, otherwise fall back to PNG.
+		$sal_svg_path = plugin_dir_path(__FILE__) . 'assets/anpc-sal.svg';
+		$sol_svg_path = plugin_dir_path(__FILE__) . 'assets/anpc-sol.svg';
+		$default_sal_img = file_exists($sal_svg_path)
+			? plugin_dir_url(__FILE__) . 'assets/anpc-sal.svg'
+			: plugin_dir_url(__FILE__) . 'assets/sal.png';
+		$default_sol_img = file_exists($sol_svg_path)
+			? plugin_dir_url(__FILE__) . 'assets/anpc-sol.svg'
+			: plugin_dir_url(__FILE__) . 'assets/sol.png';
 
 		$sal_img = isset($options['sal_image_url']) && !empty($options['sal_image_url']) ? $options['sal_image_url'] : $default_sal_img;
 		$sol_img = isset($options['sol_image_url']) && !empty($options['sol_image_url']) ? $options['sol_image_url'] : $default_sol_img;
@@ -761,12 +765,12 @@ class ANPC_Display
 <div class="anpc-display-container" style="text-align: <?php echo esc_attr($alignment); ?>; <?php echo esc_attr($layout_style); ?>">
 	<a href="<?php echo esc_url($sal_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="ANPC - Soluționarea Alternativă a Litigiilor">
-		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL" onerror="this.onerror=null; this.src='<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/sal.png'); ?>';">
+		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL">
 	</a>
 	<?php if ($isSolEnabled): ?>
 	<a href="<?php echo esc_url($sol_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="Comisia Europeană - Soluționarea Online a Litigiilor">
-		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL" onerror="this.onerror=null; this.src='<?php echo esc_url(plugin_dir_url(__FILE__) . 'assets/sol.png'); ?>';">
+		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL">
 	</a>
 	<?php
 		endif; ?>
