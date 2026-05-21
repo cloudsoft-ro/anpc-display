@@ -3,9 +3,9 @@ Contributors: constantinonu
 Author URI:  https://www.onu.ro
 Tags: anpc, sal, sol, romania, ecommerce
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 
 Automatically displays the mandatory SAL and optionally the SOL links and icons for online stores in Romania.
@@ -47,6 +47,9 @@ Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întrerupt
 3. Interfața de administrare (Setări) cu opțiunile de afișare / Admin settings interface with layout options.
 
 == Changelog ==
+
+= 1.5.2 =
+* Compatibilitate: Actualizat compatibilitatea cu WordPress 7.0 / Compatibility: Updated compatibility with WordPress 7.0.
 
 = 1.5.1 =
 * Design: Optimizat layout-ul bannerelor oficiale WordPress.org prin alinierea simetrică a bannerelor rectangulare direct sub badge-urile circulare corespunzătoare și adăugarea caracteristicilor cheie de marketing sub titlu / Design: Optimized the official WordPress.org banners layout by symmetrically aligning the rectangular banners directly under their corresponding circular badges and adding marketing key features under the title.
