@@ -14,7 +14,7 @@
 
 	blocks.registerBlockType('anpc-display/badges', {
 		title: __('ANPC Display', 'anpc-display'),
-		description: __('Afișează pictogramele SAL și SOL conform legislației ANPC.', 'anpc-display'),
+		description: __('Automatically displays the mandatory SAL and optionally the SOL links and icons for online stores in Romania.', 'anpc-display'),
 		icon: 'shield-alt',
 		category: 'widgets',
 		keywords: [__('anpc', 'anpc-display'), __('sal', 'anpc-display'), __('sol', 'anpc-display')],
@@ -40,35 +40,35 @@
 			var setAttributes = props.setAttributes;
 
 			var sidebar = el(InspectorControls, {},
-				el(PanelBody, { title: __('Setări ANPC Display', 'anpc-display'), initialOpen: true },
+				el(PanelBody, { title: __('ANPC Display Settings', 'anpc-display'), initialOpen: true },
 					el(SelectControl, {
-						label: __('Aliniere', 'anpc-display'),
+						label: __('Alignment', 'anpc-display'),
 						value: attributes.alignment,
 						options: [
-							{ label: __('Implicit (Setări Generale)', 'anpc-display'), value: '' },
-							{ label: __('Stânga', 'anpc-display'), value: 'left' },
-							{ label: __('Centru', 'anpc-display'), value: 'center' },
-							{ label: __('Dreapta', 'anpc-display'), value: 'right' }
+							{ label: __('Default (General Settings)', 'anpc-display'), value: '' },
+							{ label: __('Left', 'anpc-display'), value: 'left' },
+							{ label: __('Center', 'anpc-display'), value: 'center' },
+							{ label: __('Right', 'anpc-display'), value: 'right' }
 						],
 						onChange: function (value) {
 							setAttributes({ alignment: value });
 						}
 					}),
 					el(SelectControl, {
-						label: __('Mod Afișare', 'anpc-display'),
+						label: __('Display Mode', 'anpc-display'),
 						value: attributes.layout,
 						options: [
-							{ label: __('Implicit (Setări Generale)', 'anpc-display'), value: '' },
-							{ label: __('Automat', 'anpc-display'), value: 'auto' },
-							{ label: __('Una lângă alta (linie)', 'anpc-display'), value: 'row' },
-							{ label: __('Una peste alta (coloană)', 'anpc-display'), value: 'column' }
+							{ label: __('Default (General Settings)', 'anpc-display'), value: '' },
+							{ label: __('Automatic', 'anpc-display'), value: 'auto' },
+							{ label: __('Side by side (row)', 'anpc-display'), value: 'row' },
+							{ label: __('Stacked (column)', 'anpc-display'), value: 'column' }
 						],
 						onChange: function (value) {
 							setAttributes({ layout: value });
 						}
 					}),
 					el(ToggleControl, {
-						label: __('Afișează SOL', 'anpc-display'),
+						label: __('Display SOL', 'anpc-display'),
 						checked: attributes.enable_sol,
 						onChange: function (value) {
 							setAttributes({ enable_sol: value });
@@ -80,7 +80,7 @@
 			if (!serverSideRender) {
 				return el('div', { className: props.className },
 					sidebar,
-					el('p', {}, __('Componentul ServerSideRender nu este disponibil.', 'anpc-display'))
+					el('p', {}, __('The ServerSideRender component is not available.', 'anpc-display'))
 				);
 			}
 

@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.5.3
+ * Version:     1.5.4
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Define plugin version constant.
 if ( ! defined( 'ANPC_DISPLAY_VERSION' ) ) {
-	define( 'ANPC_DISPLAY_VERSION', '1.5.3' );
+	define( 'ANPC_DISPLAY_VERSION', '1.5.4' );
 }
 
 /**
@@ -125,7 +125,7 @@ class ANPC_Display
 	public function add_plugin_page()
 	{
 		add_options_page(
-			esc_html__('Setări ANPC Display', 'anpc-display'),
+			esc_html__('ANPC Display Settings', 'anpc-display'),
 			esc_html__('ANPC Display', 'anpc-display'),
 			'manage_options',
 			'anpc-display-setting-admin',
@@ -142,7 +142,7 @@ class ANPC_Display
 	 */
 	public function add_settings_link($links)
 	{
-		$settings_link = '<a href="options-general.php?page=anpc-display-setting-admin">' . esc_html__('Setări', 'anpc-display') . '</a>';
+		$settings_link = '<a href="options-general.php?page=anpc-display-setting-admin">' . esc_html__('Settings', 'anpc-display') . '</a>';
 		array_unshift($links, $settings_link);
 		return $links;
 	}
@@ -164,15 +164,15 @@ class ANPC_Display
 ?>
 <div class="wrap">
 	<h1>
-		<?php esc_html_e('Setări ANPC Display', 'anpc-display'); ?>
+		<?php esc_html_e('ANPC Display Settings', 'anpc-display'); ?>
 	</h1>
 	<p>
-		<?php esc_html_e('Acest plugin afișează pictogramele SAL și SOL în subsolul site-ului, conform legislației ANPC.', 'anpc-display'); ?>
+		<?php esc_html_e('This plugin automatically displays the mandatory SAL and SOL links and icons for online stores in Romania.', 'anpc-display'); ?>
 	</p>
 	<div class="notice notice-info" style="margin-top: 15px; padding: 10px;">
 		<p>
-			<strong><?php esc_html_e('Sfat:', 'anpc-display'); ?></strong>
-			<?php esc_html_e('Dacă dorești să plasezi pictogramele manual (într-un widget personalizat, o pagină specifică sau via Elementor/Gutenberg), poți folosi shortcode-ul:', 'anpc-display'); ?>
+			<strong><?php esc_html_e('Tip:', 'anpc-display'); ?></strong>
+			<?php esc_html_e('If you wish to position the badges manually (in a custom widget, a specific page, or via Elementor/Gutenberg), you can use the shortcode:', 'anpc-display'); ?>
 			<code>[anpc_display]</code>
 		</p>
 	</div>
@@ -189,10 +189,10 @@ class ANPC_Display
 		<span style="font-size: 28px;" role="img" aria-label="coffee">☕</span>
 		<div>
 			<strong style="font-size: 14px; display: block; margin-bottom: 4px;">
-				<?php esc_html_e('Îți place acest plugin? Oferă-mi o cafea!', 'anpc-display'); ?>
+				<?php esc_html_e('Do you like this plugin? Buy me a coffee!', 'anpc-display'); ?>
 			</strong>
 			<span style="font-size: 13px; color: #555;">
-				<?php esc_html_e('Plugin-ul este gratuit și în continuă dezvoltare. Dacă ți-a fost de folos, poți susține munca mea cu o donație simbolică.', 'anpc-display'); ?>
+				<?php esc_html_e('The plugin is free and constantly updated. If it was useful, you can support my work with a symbolic donation.', 'anpc-display'); ?>
 			</span>
 			<div style="margin-top: 10px;">
 				<a href="https://www.buymeacoffee.com/constantinonu"
@@ -235,14 +235,14 @@ class ANPC_Display
 
 		add_settings_section(
 			'setting_section_id',
-			esc_html__('Configurare Generală', 'anpc-display'),
+			esc_html__('General Settings', 'anpc-display'),
 			array($this, 'print_section_info'),
 			'anpc-display-setting-admin'
 		);
 
 		add_settings_field(
 			'disable_footer',
-			esc_html__('Afișare Automată', 'anpc-display'),
+			esc_html__('Automatic Display', 'anpc-display'),
 			array($this, 'disable_footer_callback'),
 			'anpc-display-setting-admin',
 			'setting_section_id'
@@ -250,7 +250,7 @@ class ANPC_Display
 
 		add_settings_field(
 			'alignment',
-			esc_html__('Aliniere', 'anpc-display'),
+			esc_html__('Alignment', 'anpc-display'),
 			array($this, 'alignment_callback'),
 			'anpc-display-setting-admin',
 			'setting_section_id'
@@ -258,7 +258,7 @@ class ANPC_Display
 
 		add_settings_field(
 			'layout',
-			esc_html__('Mod Afișare', 'anpc-display'),
+			esc_html__('Display Mode', 'anpc-display'),
 			array($this, 'layout_callback'),
 			'anpc-display-setting-admin',
 			'setting_section_id'
@@ -266,7 +266,7 @@ class ANPC_Display
 
 		add_settings_field(
 			'mobile_icon_size',
-			esc_html__('Mărime Pictograme Mobil (px)', 'anpc-display'),
+			esc_html__('Mobile Icon Size (px)', 'anpc-display'),
 			array($this, 'mobile_size_callback'),
 			'anpc-display-setting-admin',
 			'setting_section_id'
@@ -274,23 +274,23 @@ class ANPC_Display
 
 		add_settings_field(
 			'custom_css',
-			esc_html__('CSS Personalizat', 'anpc-display'),
+			esc_html__('Custom CSS', 'anpc-display'),
 			array($this, 'custom_css_callback'),
 			'anpc-display-setting-admin',
 			'setting_section_id'
 		);
 
-		// Secțiunea SAL
+		// SAL Section
 		add_settings_section(
 			'sal_section_id',
-			esc_html__('Setări SAL (Alternative Dispute Resolution)', 'anpc-display'),
+			esc_html__('SAL Settings (Alternative Dispute Resolution)', 'anpc-display'),
 			null,
 			'anpc-display-setting-admin'
 		);
 
 		add_settings_field(
 			'sal_image_url',
-			esc_html__('Imagine SAL URL', 'anpc-display'),
+			esc_html__('SAL Image URL', 'anpc-display'),
 			array($this, 'sal_image_callback'),
 			'anpc-display-setting-admin',
 			'sal_section_id'
@@ -298,23 +298,23 @@ class ANPC_Display
 
 		add_settings_field(
 			'sal_link_url',
-			esc_html__('Link SAL URL', 'anpc-display'),
+			esc_html__('SAL Link URL', 'anpc-display'),
 			array($this, 'sal_link_callback'),
 			'anpc-display-setting-admin',
 			'sal_section_id'
 		);
 
-		// Secțiunea SOL
+		// SOL Section
 		add_settings_section(
 			'sol_section_id',
-			esc_html__('Setări SOL (Online Dispute Resolution)', 'anpc-display'),
+			esc_html__('SOL Settings (Online Dispute Resolution)', 'anpc-display'),
 			array($this, 'print_sol_info'),
 			'anpc-display-setting-admin'
 		);
 
 		add_settings_field(
 			'enable_sol',
-			esc_html__('Afișează SOL', 'anpc-display'),
+			esc_html__('Display SOL', 'anpc-display'),
 			array($this, 'enable_sol_callback'),
 			'anpc-display-setting-admin',
 			'sol_section_id'
@@ -322,7 +322,7 @@ class ANPC_Display
 
 		add_settings_field(
 			'sol_image_url',
-			esc_html__('Imagine SOL URL', 'anpc-display'),
+			esc_html__('SOL Image URL', 'anpc-display'),
 			array($this, 'sol_image_callback'),
 			'anpc-display-setting-admin',
 			'sol_section_id'
@@ -330,7 +330,7 @@ class ANPC_Display
 
 		add_settings_field(
 			'sol_link_url',
-			esc_html__('Link SOL URL', 'anpc-display'),
+			esc_html__('SOL Link URL', 'anpc-display'),
 			array($this, 'sol_link_callback'),
 			'anpc-display-setting-admin',
 			'sol_section_id'
@@ -350,8 +350,8 @@ class ANPC_Display
 			'<input type="checkbox" id="disable_footer" name="anpc_display_option_name[disable_footer]" value="1" %s />',
 			$is_disabled ? 'checked' : ''
 		);
-		echo ' <label for="disable_footer">' . esc_html__('Dezactivează afișarea automată în subsolul site-ului (Footer)', 'anpc-display') . '</label>';
-		echo '<p class="description">' . esc_html__('Bifează doar dacă folosești exclusiv shortcode-ul, blocul Gutenberg sau widget-ul Elementor, pentru a evita afișarea de două ori a pictogramelor.', 'anpc-display') . '</p>';
+		echo ' <label for="disable_footer">' . esc_html__('Disable automatic display in the website footer (Footer)', 'anpc-display') . '</label>';
+		echo '<p class="description">' . esc_html__('Check this only if you exclusively use the shortcode, Gutenberg block, or Elementor widget, to avoid displaying the badges twice.', 'anpc-display') . '</p>';
 	}
 
 	/**
@@ -366,13 +366,13 @@ class ANPC_Display
 ?>
 <select id="layout" name="anpc_display_option_name[layout]">
 	<option value="auto" <?php selected($layout, 'auto' ); ?>>
-		<?php esc_html_e('Automat (Implicit)', 'anpc-display'); ?>
+		<?php esc_html_e('Automatic (Default)', 'anpc-display'); ?>
 	</option>
 	<option value="row" <?php selected($layout, 'row' ); ?>>
-		<?php esc_html_e('Una lângă alta (pe aceeași linie)', 'anpc-display'); ?>
+		<?php esc_html_e('Side by side (on the same line)', 'anpc-display'); ?>
 	</option>
 	<option value="column" <?php selected($layout, 'column' ); ?>>
-		<?php esc_html_e('Una peste alta (pe coloană)', 'anpc-display'); ?>
+		<?php esc_html_e('Stacked (column)', 'anpc-display'); ?>
 	</option>
 </select>
 <?php
@@ -390,13 +390,13 @@ class ANPC_Display
 ?>
 <select id="alignment" name="anpc_display_option_name[alignment]">
 	<option value="left" <?php selected($alignment, 'left' ); ?>>
-		<?php esc_html_e('Stânga', 'anpc-display'); ?>
+		<?php esc_html_e('Left', 'anpc-display'); ?>
 	</option>
 	<option value="center" <?php selected($alignment, 'center' ); ?>>
-		<?php esc_html_e('Centru', 'anpc-display'); ?>
+		<?php esc_html_e('Center', 'anpc-display'); ?>
 	</option>
 	<option value="right" <?php selected($alignment, 'right' ); ?>>
-		<?php esc_html_e('Dreapta', 'anpc-display'); ?>
+		<?php esc_html_e('Right', 'anpc-display'); ?>
 	</option>
 </select>
 <?php
@@ -415,7 +415,7 @@ class ANPC_Display
 <input type="number" id="mobile_icon_size" name="anpc_display_option_name[mobile_icon_size]"
 	value="<?php echo esc_attr($value); ?>" min="20" max="1000" />
 <p class="description">
-	<?php esc_html_e('Lățimea pictogramelor pe ecrane mai mici de 600px.', 'anpc-display'); ?>
+	<?php esc_html_e('Width of the badges on screens smaller than 600px.', 'anpc-display'); ?>
 </p>
 <?php
 	}
@@ -497,7 +497,7 @@ class ANPC_Display
 	 */
 	public function print_section_info()
 	{
-		print esc_html__('Configurați URL-urile pentru imaginile și link-urile SAL/SOL. Lăsați câmpurile goale pentru a folosi valorile implicite.', 'anpc-display');
+		print esc_html__('Configure URLs for SAL/SOL images and links. Leave fields empty to use default values.', 'anpc-display');
 	}
 
 	/**
@@ -509,10 +509,10 @@ class ANPC_Display
 	 */
 	public function print_sol_info()
 	{
-		print '<p style="color: #d63638;">' . esc_html__('Notă: Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întreruptă din 20 iulie 2025. Afișarea acestui link este acum opțională.', 'anpc-display') . '</p>';
+		print '<p style="color: #d63638;">' . esc_html__('Note: The European Online Dispute Resolution (SOL) platform has been discontinued as of 20 July 2025. Displaying this link is now optional.', 'anpc-display') . '</p>';
 		print '<p>' . sprintf(
 			/* translators: %s: URL to EU dispute resolution bodies */
-			esc_html__('Mai multe informații despre încetarea platformei SOL și noile reglementări pot fi găsite aici: %s', 'anpc-display'),
+			esc_html__('More information about the termination of the SOL platform and the new regulations can be found here: %s', 'anpc-display'),
 			'<a href="https://consumer-redress.ec.europa.eu/dispute-resolution-bodies" target="_blank" rel="noopener noreferrer">https://consumer-redress.ec.europa.eu/dispute-resolution-bodies</a>'
 		) . '</p>';
 	}

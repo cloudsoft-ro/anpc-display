@@ -84,7 +84,7 @@ class ANPC_Elementor_Widget extends \Elementor\Widget_Base
 			'info_text',
 			array(
 				'type' => \Elementor\Controls_Manager::RAW_HTML,
-				'raw'  => esc_html__('Pictogramele SAL/SOL sunt configurate în setările generale ale plugin-ului (Setări -> ANPC Display).', 'anpc-display'),
+				'raw'  => esc_html__('The SAL/SOL badges are configured in the general plugin settings (Settings -> ANPC Display).', 'anpc-display'),
 			)
 		);
 

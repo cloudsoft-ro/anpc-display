@@ -1,108 +1,225 @@
-# Copyright (C) 2026 Constantin Onu
-# This file is distributed under the same license as the ANPC Display plugin.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ANPC Display 1.0.9\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/anpc-display\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-25 16:17+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-13T16:30:00+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
-"X-Domain: anpc-display\n"
 
-#: anpc-display.php:5
-msgid "Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România)."
+#: anpc-display.php:128 anpc-display.php:167 assets/js/block.js:43
+msgid "ANPC Display Settings"
 msgstr ""
 
-#: anpc-display.php:92 anpc-display.php:131
-msgid "Setări ANPC Display"
-msgstr ""
-
-#: anpc-display.php:93
+#: anpc-display.php:129 elementor-widget.php:36 assets/js/block.js:16
 msgid "ANPC Display"
 msgstr ""
 
-#: anpc-display.php:109
-msgid "Setări"
+#: anpc-display.php:145
+msgid "Settings"
 msgstr ""
 
-#: anpc-display.php:134
-msgid "Acest plugin afișează pictogramele SAL și SOL în subsolul site-ului, conform legislației ANPC."
+#: anpc-display.php:170
+msgid ""
+"This plugin automatically displays the mandatory SAL and SOL links and icons "
+"for online stores in Romania."
 msgstr ""
 
 #: anpc-display.php:174
-msgid "Configurare Generală"
+msgid "Tip:"
 msgstr ""
 
-
-#: anpc-display.php:190
-msgid "Setări SAL (Alternative Dispute Resolution)"
+#: anpc-display.php:175
+msgid ""
+"If you wish to position the badges manually (in a custom widget, a specific "
+"page, or via Elementor/Gutenberg), you can use the shortcode:"
 msgstr ""
 
-#: anpc-display.php:197
-msgid "Imagine SAL URL"
+#: anpc-display.php:192
+msgid "Do you like this plugin? Buy me a coffee!"
 msgstr ""
 
-#: anpc-display.php:205
-msgid "Link SAL URL"
+#: anpc-display.php:195
+msgid ""
+"The plugin is free and constantly updated. If it was useful, you can support "
+"my work with a symbolic donation."
 msgstr ""
 
-#: anpc-display.php:214
-msgid "Setări SOL (Online Dispute Resolution)"
+#: anpc-display.php:202
+msgid "Buy me a coffee"
 msgstr ""
 
-#: anpc-display.php:221
-msgid "Afișează SOL"
+#: anpc-display.php:238
+msgid "General Settings"
 msgstr ""
 
-#: anpc-display.php:229
-msgid "Imagine SOL URL"
+#: anpc-display.php:245
+msgid "Automatic Display"
 msgstr ""
 
-#: anpc-display.php:237
-msgid "Link SOL URL"
+#: anpc-display.php:253 elementor-widget.php:94 assets/js/block.js:45
+msgid "Alignment"
 msgstr ""
 
-#: anpc-display.php:291
-msgid "Configurați URL-urile pentru imaginile și link-urile SAL/SOL. Lăsați câmpurile goale pentru a folosi valorile implicite."
+#: anpc-display.php:261 assets/js/block.js:58
+msgid "Display Mode"
 msgstr ""
 
-#: anpc-display.php:303
-msgid "Notă: Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întreruptă din 20 iulie 2025. Afișarea acestui link este acum opțională."
+#: anpc-display.php:269
+msgid "Mobile Icon Size (px)"
 msgstr ""
 
-#: anpc-display.php:306
-msgid "Mai multe informații despre încetarea platformei SOL și noile reglementări pot fi găsite aici: %s"
+#: anpc-display.php:277
+msgid "Custom CSS"
 msgstr ""
 
-#: anpc-display.php:186
-msgid "Aliniere"
+#: anpc-display.php:286
+msgid "SAL Settings (Alternative Dispute Resolution)"
 msgstr ""
 
-#: anpc-display.php:252
-msgid "Stânga"
+#: anpc-display.php:293
+msgid "SAL Image URL"
 msgstr ""
 
-#: anpc-display.php:253
-msgid "Centru"
+#: anpc-display.php:301
+msgid "SAL Link URL"
 msgstr ""
 
-#: anpc-display.php:254
-msgid "Dreapta"
+#: anpc-display.php:310
+msgid "SOL Settings (Online Dispute Resolution)"
 msgstr ""
 
-#: anpc-display.php:191
-msgid "Mărime Pictograme Mobil (px)"
+#: anpc-display.php:317 assets/js/block.js:71
+msgid "Display SOL"
 msgstr ""
 
-#: anpc-display.php:267
-msgid "Lățimea pictogramelor pe ecrane mai mici de 600px."
+#: anpc-display.php:325
+msgid "SOL Image URL"
 msgstr ""
 
-#: anpc-display.php:196
-msgid "CSS Personalizat"
+#: anpc-display.php:333
+msgid "SOL Link URL"
+msgstr ""
+
+#: anpc-display.php:353
+msgid "Disable automatic display in the website footer (Footer)"
+msgstr ""
+
+#: anpc-display.php:354
+msgid ""
+"Check this only if you exclusively use the shortcode, Gutenberg block, or "
+"Elementor widget, to avoid displaying the badges twice."
+msgstr ""
+
+#: anpc-display.php:369 elementor-widget.php:123
+msgid "Automatic (Default)"
+msgstr ""
+
+#: anpc-display.php:372
+msgid "Side by side (on the same line)"
+msgstr ""
+
+#: anpc-display.php:375 assets/js/block.js:64
+msgid "Stacked (column)"
+msgstr ""
+
+#: anpc-display.php:393 elementor-widget.php:98 assets/js/block.js:49
+msgid "Left"
+msgstr ""
+
+#: anpc-display.php:396 elementor-widget.php:102 assets/js/block.js:50
+msgid "Center"
+msgstr ""
+
+#: anpc-display.php:399 elementor-widget.php:106 assets/js/block.js:51
+msgid "Right"
+msgstr ""
+
+#: anpc-display.php:418
+msgid "Width of the badges on screens smaller than 600px."
+msgstr ""
+
+#: anpc-display.php:500
+msgid ""
+"Configure URLs for SAL/SOL images and links. Leave fields empty to use "
+"default values."
+msgstr ""
+
+#: anpc-display.php:512
+msgid ""
+"Note: The European Online Dispute Resolution (SOL) platform has been "
+"discontinued as of 20 July 2025. Displaying this link is now optional."
+msgstr ""
+
+#: anpc-display.php:515
+#, php-format
+msgid ""
+"More information about the termination of the SOL platform and the new "
+"regulations can be found here: %s"
+msgstr ""
+
+#: elementor-widget.php:78
+msgid "Content"
+msgstr ""
+
+#: elementor-widget.php:87
+msgid ""
+"The SAL/SOL badges are configured in the general plugin settings (Settings "
+"-> ANPC Display)."
+msgstr ""
+
+#: elementor-widget.php:120
+msgid "Layout"
+msgstr ""
+
+#: elementor-widget.php:124
+msgid "Side by side"
+msgstr ""
+
+#: elementor-widget.php:125
+msgid "Stacked (Column)"
+msgstr ""
+
+#: assets/js/block.js:17
+msgid ""
+"Automatically displays the mandatory SAL and optionally the SOL links and "
+"icons for online stores in Romania."
+msgstr ""
+
+#: assets/js/block.js:20
+msgid "anpc"
+msgstr ""
+
+#: assets/js/block.js:20
+msgid "sal"
+msgstr ""
+
+#: assets/js/block.js:20
+msgid "sol"
+msgstr ""
+
+#: assets/js/block.js:48 assets/js/block.js:61
+msgid "Default (General Settings)"
+msgstr ""
+
+#: assets/js/block.js:62
+msgid "Automatic"
+msgstr ""
+
+#: assets/js/block.js:63
+msgid "Side by side (row)"
+msgstr ""
+
+#: assets/js/block.js:83
+msgid "The ServerSideRender component is not available."
 msgstr ""
