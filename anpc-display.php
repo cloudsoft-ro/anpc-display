@@ -3,7 +3,7 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.5.2
+ * Version:     1.5.3
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
@@ -22,6 +22,11 @@
 
 // Prevent direct file access.
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+// Define plugin version constant.
+if ( ! defined( 'ANPC_DISPLAY_VERSION' ) ) {
+	define( 'ANPC_DISPLAY_VERSION', '1.5.3' );
+}
 
 /**
  * Main plugin class responsible for rendering SAL/SOL icons and managing settings.
@@ -65,6 +70,7 @@ class ANPC_Display
 	 */
 	public function __construct()
 	{
+		add_action('init', array($this, 'load_textdomain'));
 		if (is_admin()) {
 			add_action('admin_menu', array($this, 'add_plugin_page'));
 			add_action('admin_init', array($this, 'page_init'));
@@ -75,6 +81,34 @@ class ANPC_Display
 		add_shortcode('anpc_display', array($this, 'shortcode_callback'));
 		add_action('init', array($this, 'register_gutenberg_block'));
 		add_action('elementor/widgets/register', array($this, 'register_elementor_widgets'));
+	}
+
+	/**
+	 * Load plugin translations.
+	 *
+	 * @since 1.5.3
+	 * @return void
+	 */
+	public function load_textdomain()
+	{
+		load_plugin_textdomain('anpc-display', false, dirname(plugin_basename(__FILE__)) . '/languages');
+	}
+
+	/**
+	 * Retrieve plugin options in a safe manner, preventing PHP Warnings in PHP 8.0+.
+	 *
+	 * @since 1.5.3
+	 * @return array Sanitized plugin options.
+	 */
+	private function get_options()
+	{
+		if (null === $this->options) {
+			$this->options = get_option('anpc_display_option_name', array());
+			if (!is_array($this->options)) {
+				$this->options = array();
+			}
+		}
+		return $this->options;
 	}
 
 
@@ -126,7 +160,7 @@ class ANPC_Display
 	 */
 	public function create_admin_page()
 	{
-		$this->options = get_option('anpc_display_option_name');
+		$this->options = $this->get_options();
 ?>
 <div class="wrap">
 	<h1>
@@ -614,9 +648,9 @@ class ANPC_Display
 	 */
 	public function enqueue_styles()
 	{
-		$options = get_option('anpc_display_option_name');
+		$options = $this->get_options();
 
-		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), '1.5.2');
+		wp_enqueue_style('anpc-display-style', plugin_dir_url(__FILE__) . 'assets/anpc-display.css', array(), ANPC_DISPLAY_VERSION);
 
 		$mobile_size = isset($options['mobile_icon_size']) ? absint($options['mobile_icon_size']) : 150;
 		$custom_css = isset($options['custom_css']) ? $options['custom_css'] : '';
@@ -641,15 +675,30 @@ class ANPC_Display
 		}
 	}
 
-	/**
-	 * Shortcode callback to display SAL/SOL icons.
-	 *
-	 * @since 1.0.7
-	 * @return string HTML output of the icons.
-	 */
-	public function shortcode_callback()
+	public function shortcode_callback($atts)
 	{
-		return $this->get_anpc_content();
+		$atts = shortcode_atts(
+			array(
+				'alignment'  => '',
+				'layout'     => '',
+				'enable_sol' => '',
+			),
+			$atts,
+			'anpc_display'
+		);
+
+		$args = array();
+		if (!empty($atts['alignment'])) {
+			$args['alignment'] = sanitize_text_field($atts['alignment']);
+		}
+		if (!empty($atts['layout'])) {
+			$args['layout'] = sanitize_text_field($atts['layout']);
+		}
+		if ($atts['enable_sol'] !== '') {
+			$args['enable_sol'] = filter_var($atts['enable_sol'], FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
+		}
+
+		return $this->get_anpc_content($args);
 	}
 
 	/**
@@ -667,15 +716,60 @@ class ANPC_Display
 		wp_register_script(
 			'anpc-display-block-js',
 			plugin_dir_url(__FILE__) . 'assets/js/block.js',
-			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-server-side-render'),
-			'1.5.2',
+			array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-server-side-render'),
+			ANPC_DISPLAY_VERSION,
 			true
 		);
 
+		wp_register_style(
+			'anpc-display-style',
+			plugin_dir_url(__FILE__) . 'assets/anpc-display.css',
+			array(),
+			ANPC_DISPLAY_VERSION
+		);
+
 		register_block_type('anpc-display/badges', array(
-			'editor_script' => 'anpc-display-block-js',
-			'render_callback' => array($this, 'shortcode_callback'),
+			'editor_script'   => 'anpc-display-block-js',
+			'editor_style'    => 'anpc-display-style',
+			'render_callback' => array($this, 'gutenberg_block_render_callback'),
+			'attributes'      => array(
+				'alignment'  => array(
+					'type'    => 'string',
+					'default' => '',
+				),
+				'layout'     => array(
+					'type'    => 'string',
+					'default' => '',
+				),
+				'enable_sol' => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+			),
 		));
+	}
+
+	/**
+	 * Server-side render callback for the Gutenberg block.
+	 *
+	 * @since 1.5.3
+	 * @param array $attributes Block attributes.
+	 * @return string Block HTML.
+	 */
+	public function gutenberg_block_render_callback($attributes)
+	{
+		$args = array();
+		if (!empty($attributes['alignment'])) {
+			$args['alignment'] = $attributes['alignment'];
+		}
+		if (!empty($attributes['layout'])) {
+			$args['layout'] = $attributes['layout'];
+		}
+		if (isset($attributes['enable_sol'])) {
+			$args['enable_sol'] = $attributes['enable_sol'] ? 1 : 0;
+		}
+
+		return $this->get_anpc_content($args);
 	}
 
 	/**
@@ -691,15 +785,9 @@ class ANPC_Display
 		$widgets_manager->register(new \ANPC_Elementor_Widget());
 	}
 
-	/**
-	 * Wrapper for wp_footer hook.
-	 *
-	 * @since 1.0.7
-	 * @return void
-	 */
 	public function display_footer_content()
 	{
-		$options = get_option('anpc_display_option_name');
+		$options = $this->get_options();
 		$is_disabled = isset($options['disable_footer']) ? $options['disable_footer'] : 0;
 
 		if ($is_disabled) {
@@ -722,14 +810,16 @@ class ANPC_Display
 	 * Output is skipped entirely when the plugin is disabled via settings.
 	 *
 	 * @since 1.0.7
+	 * @param array $args Optional arguments to override global settings (alignment, layout, enable_sol).
 	 * @return string HTML content for the badges.
 	 */
-	public function get_anpc_content()
+	public function get_anpc_content($args = array())
 	{
-		$options = get_option('anpc_display_option_name');
+		$options = $this->get_options();
 
-		$isSolEnabled = isset($options['enable_sol']) ? $options['enable_sol'] : 0;
-		$alignment = isset($options['alignment']) ? $options['alignment'] : 'center';
+		$isSolEnabled = isset($args['enable_sol']) ? (int) $args['enable_sol'] : (isset($options['enable_sol']) ? (int) $options['enable_sol'] : 0);
+		$alignment = isset($args['alignment']) && !empty($args['alignment']) ? $args['alignment'] : (isset($options['alignment']) ? $options['alignment'] : 'center');
+		$layout = isset($args['layout']) && !empty($args['layout']) ? $args['layout'] : (isset($options['layout']) ? $options['layout'] : 'auto');
 
 		// Multi-language support (WPML, Polylang or native locale)
 		$locale = determine_locale();
@@ -764,7 +854,6 @@ class ANPC_Display
 		$sal_img = isset($options['sal_image_url']) && !empty($options['sal_image_url']) ? $options['sal_image_url'] : $default_sal_img;
 		$sol_img = isset($options['sol_image_url']) && !empty($options['sol_image_url']) ? $options['sol_image_url'] : $default_sol_img;
 
-		$layout = isset($options['layout']) ? $options['layout'] : 'auto';
 		$layout_style = '';
 		if ($layout === 'column') {
 			$layout_style = 'flex-direction: column !important; ';

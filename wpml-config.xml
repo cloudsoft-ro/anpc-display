@@ -1,0 +1,11 @@
+<wpml-config>
+	<admin-texts>
+		<key name="anpc_display_option_name">
+			<key name="sal_image_url" />
+			<key name="sol_image_url" />
+			<key name="sal_link_url" />
+			<key name="sol_link_url" />
+			<key name="custom_css" />
+		</key>
+	</admin-texts>
+</wpml-config>

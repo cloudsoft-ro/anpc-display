@@ -9,6 +9,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! class_exists( '\Elementor\Widget_Base' ) ) {
+	return;
+}
+
 class ANPC_Elementor_Widget extends \Elementor\Widget_Base
 {
 
@@ -110,6 +114,20 @@ class ANPC_Elementor_Widget extends \Elementor\Widget_Base
 			)
 		);
 
+		$this->add_control(
+			'layout',
+			array(
+				'label'   => esc_html__('Layout', 'anpc-display'),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'options' => array(
+					'auto'   => esc_html__('Automatic (Default)', 'anpc-display'),
+					'row'    => esc_html__('Side by side', 'anpc-display'),
+					'column' => esc_html__('Stacked (Column)', 'anpc-display'),
+				),
+				'default' => 'auto',
+			)
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -119,11 +137,16 @@ class ANPC_Elementor_Widget extends \Elementor\Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+		$alignment = !empty($settings['alignment']) ? $settings['alignment'] : 'center';
+		$layout = !empty($settings['layout']) ? $settings['layout'] : 'auto';
 		
 		// Use the existing logic from the main plugin class
 		global $anpc_display;
 		if (isset($anpc_display) && method_exists($anpc_display, 'get_anpc_content')) {
-			echo wp_kses_post($anpc_display->get_anpc_content());
+			echo wp_kses_post($anpc_display->get_anpc_content(array(
+				'alignment' => $alignment,
+				'layout'    => $layout,
+			)));
 		}
 	}
 }
