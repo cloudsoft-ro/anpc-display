@@ -3,11 +3,12 @@
  * Plugin Name: ANPC Display
  * Plugin URI:  https://wordpress.org/plugins/anpc-display
  * Description: Automatically displays the mandatory SAL and SOL links and icons for online stores in Romania. (Afișează automat link-urile și pictogramele SAL și SOL obligatorii pentru magazinele online din România).
- * Version:     1.5.4
+ * Version:     1.5.5
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author:      Constantin Onu
  * Author URI:  https://www.onu.ro
+ * Donate link: https://buymeacoffee.com/constantinonu
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: anpc-display
@@ -25,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Define plugin version constant.
 if ( ! defined( 'ANPC_DISPLAY_VERSION' ) ) {
-	define( 'ANPC_DISPLAY_VERSION', '1.5.4' );
+	define( 'ANPC_DISPLAY_VERSION', '1.5.5' );
 }
 
 /**
@@ -77,6 +78,7 @@ class ANPC_Display
 			add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_settings_link'));
 		}
 		add_action('wp_footer', array($this, 'display_footer_content'));
+		add_action('woocommerce_review_order_after_submit', array($this, 'display_checkout_content'));
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
 		add_shortcode('anpc_display', array($this, 'shortcode_callback'));
 		add_action('init', array($this, 'register_gutenberg_block'));
@@ -280,6 +282,22 @@ class ANPC_Display
 			'setting_section_id'
 		);
 
+		add_settings_field(
+			'enable_woocommerce_checkout',
+			esc_html__('WooCommerce Checkout Display', 'anpc-display'),
+			array($this, 'enable_woocommerce_checkout_callback'),
+			'anpc-display-setting-admin',
+			'setting_section_id'
+		);
+
+		add_settings_field(
+			'open_new_tab',
+			esc_html__('Open Links in New Tab', 'anpc-display'),
+			array($this, 'open_new_tab_callback'),
+			'anpc-display-setting-admin',
+			'setting_section_id'
+		);
+
 		// SAL Section
 		add_settings_section(
 			'sal_section_id',
@@ -352,6 +370,41 @@ class ANPC_Display
 		);
 		echo ' <label for="disable_footer">' . esc_html__('Disable automatic display in the website footer (Footer)', 'anpc-display') . '</label>';
 		echo '<p class="description">' . esc_html__('Check this only if you exclusively use the shortcode, Gutenberg block, or Elementor widget, to avoid displaying the badges twice.', 'anpc-display') . '</p>';
+	}
+
+	/**
+	 * Render the WooCommerce checkout integration checkbox field.
+	 *
+	 * @since 1.5.5
+	 * @return void
+	 */
+	public function enable_woocommerce_checkout_callback()
+	{
+		$is_checkout_enabled = isset($this->options['enable_woocommerce_checkout']) ? $this->options['enable_woocommerce_checkout'] : 0;
+		printf(
+			'<input type="checkbox" id="enable_woocommerce_checkout" name="anpc_display_option_name[enable_woocommerce_checkout]" value="1" %s />',
+			$is_checkout_enabled ? 'checked' : ''
+		);
+		echo ' <label for="enable_woocommerce_checkout">' . esc_html__('Enable automatic display on WooCommerce Checkout page', 'anpc-display') . '</label>';
+		echo '<p class="description">' . esc_html__('Check this to display the SAL/SOL badges directly below the "Place Order" button on the checkout page.', 'anpc-display') . '</p>';
+	}
+
+	/**
+	 * Render the open in new tab checkbox field.
+	 *
+	 * @since 1.5.5
+	 * @return void
+	 */
+	public function open_new_tab_callback()
+	{
+		// Default to 1 (checked) if not set in database
+		$open_new_tab = isset($this->options['open_new_tab']) ? $this->options['open_new_tab'] : 1;
+		printf(
+			'<input type="checkbox" id="open_new_tab" name="anpc_display_option_name[open_new_tab]" value="1" %s />',
+			$open_new_tab ? 'checked' : ''
+		);
+		echo ' <label for="open_new_tab">' . esc_html__('Open links in a new tab (target="_blank")', 'anpc-display') . '</label>';
+		echo '<p class="description">' . esc_html__('Uncheck this to open the links in the same browser tab.', 'anpc-display') . '</p>';
 	}
 
 	/**
@@ -455,6 +508,16 @@ class ANPC_Display
 			$new_input['disable_footer'] = absint($input['disable_footer']);
 		else
 			$new_input['disable_footer'] = 0;
+
+		if (isset($input['enable_woocommerce_checkout']))
+			$new_input['enable_woocommerce_checkout'] = absint($input['enable_woocommerce_checkout']);
+		else
+			$new_input['enable_woocommerce_checkout'] = 0;
+
+		if (isset($input['open_new_tab']))
+			$new_input['open_new_tab'] = absint($input['open_new_tab']);
+		else
+			$new_input['open_new_tab'] = 0;
 
 		if (isset($input['enable_sol']))
 			$new_input['enable_sol'] = absint($input['enable_sol']);
@@ -797,6 +860,18 @@ class ANPC_Display
 		echo wp_kses_post($this->get_anpc_content());
 	}
 
+	public function display_checkout_content()
+	{
+		$options = $this->get_options();
+		$is_checkout_enabled = isset($options['enable_woocommerce_checkout']) ? $options['enable_woocommerce_checkout'] : 0;
+
+		if (!$is_checkout_enabled) {
+			return;
+		}
+
+		echo wp_kses_post($this->get_anpc_content());
+	}
+
 	/**
 	 * Generates the HTML for SAL and SOL badges.
 	 *
@@ -870,17 +945,21 @@ class ANPC_Display
 		
 		$layout_style .= 'justify-content: ' . $flex_align . '; align-items: ' . $flex_align . ';';
 
+		// Target tab settings (default to new tab)
+		$open_new_tab = isset($options['open_new_tab']) ? (int) $options['open_new_tab'] : 1;
+		$target_attr = $open_new_tab ? '_blank' : '_self';
+
 		ob_start();
 ?>
 <div class="anpc-display-container" style="text-align: <?php echo esc_attr($alignment); ?>; <?php echo esc_attr($layout_style); ?>">
-	<a href="<?php echo esc_url($sal_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
+	<a href="<?php echo esc_url($sal_url); ?>" target="<?php echo esc_attr($target_attr); ?>" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="ANPC - Soluționarea Alternativă a Litigiilor">
-		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL">
+		<img src="<?php echo esc_url($sal_img); ?>" alt="ANPC SAL" width="250" height="50" loading="lazy" decoding="async">
 	</a>
 	<?php if ($isSolEnabled): ?>
-	<a href="<?php echo esc_url($sol_url); ?>" target="_blank" rel="nofollow noopener noreferrer" class="anpc-item"
+	<a href="<?php echo esc_url($sol_url); ?>" target="<?php echo esc_attr($target_attr); ?>" rel="nofollow noopener noreferrer" class="anpc-item"
 		title="Comisia Europeană - Soluționarea Online a Litigiilor">
-		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL">
+		<img src="<?php echo esc_url($sol_img); ?>" alt="ANPC SOL" width="250" height="50" loading="lazy" decoding="async">
 	</a>
 	<?php
 		endif; ?>

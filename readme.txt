@@ -1,11 +1,12 @@
 === ANPC Display ===
 Contributors: constantinonu
+Donate link: https://buymeacoffee.com/constantinonu
 Author URI:  https://www.onu.ro
 Tags: anpc, sal, sol, romania, ecommerce
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 License: GPLv2 or later
 
 Automatically displays the mandatory SAL and optionally the SOL links and icons for online stores in Romania.
@@ -47,6 +48,15 @@ Platforma Europeană de Soluționare Online a Litigiilor (SOL) a fost întrerupt
 3. Interfața de administrare (Setări) cu opțiunile de afișare / Admin settings interface with layout options.
 
 == Changelog ==
+
+= 1.5.5 =
+* Performanță: Adăugat dimensiuni explicite (lățime și înălțime) și atributele loading="lazy" / decoding="async" pictogramelor pentru prevenirea Cumulative Layout Shift (CLS) și îmbunătățirea scorului Google PageSpeed/Lighthouse.
+* WooCommerce: Adăugat suport pentru afișarea automată a pictogramelor în pagina de Checkout sub butonul de comandă.
+* UX: Adăugat opțiune în setări pentru deschiderea link-urilor în tab nou sau în aceeași filă.
+/
+* Performance: Added explicit dimensions (width and height) and loading="lazy" / decoding="async" attributes to the badges to prevent Cumulative Layout Shift (CLS) and improve Google PageSpeed/Lighthouse scores.
+* WooCommerce: Added support for automatic badge display on the Checkout page below the place order button.
+* UX: Added a settings option to choose whether links open in a new tab or in the same tab.
 
 = 1.5.4 =
 * I18n: Refactorizat traducerile conform bunelor practici (limba implicită a codului devine engleza, cu traduceri localizate în română prin fișierele ro_RO).
